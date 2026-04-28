@@ -28,7 +28,7 @@ target_bright['60'] = fuzz.trimf(target_bright.universe, [40, 60, 80])
 target_bright['80'] = fuzz.trimf(target_bright.universe, [60, 80, 100])
 target_bright['100'] = fuzz.trimf(target_bright.universe, [80, 100, 100])
 
-# Rules yang lebih spesifik
+# Rules spesifik
 rules = [
     ctrl.Rule(jumlah_jari['nol'], target_bright['0']),
     ctrl.Rule(jumlah_jari['satu'], target_bright['20']),
@@ -61,22 +61,27 @@ while True:
     total_jari = 0
 
     if results.multi_hand_landmarks:
-        for hand_lms in results.multi_hand_landmarks:
+        for idx, hand_handedness in enumerate(results.multi_handedness):
+            label = hand_handedness.classification[0].label # 'Left' atau 'Right'
+            hand_lms = results.multi_hand_landmarks[idx]
             lm = hand_lms.landmark
-            
-            # Logika Cek Jari Terbuka (Ujung < Pangkal)
-            tips = [8, 12, 16, 20] # Telunjuk, Tengah, Manis, Kelingking
-            pips = [6, 10, 14, 18]
-            
+
             opened_fingers = []
-            # Cek 4 jari
+            
+            # 1. Logika 4 Jari (Telunjuk - Kelingking) -> Sama untuk kedua tangan
+            tips = [8, 12, 16, 20]
+            pips = [6, 10, 14, 18]
             for t, p in zip(tips, pips):
-                if lm[t].y < lm[p].y: opened_fingers.append(1)
-            
-            # Cek Jempol (berbeda sumbu, pakai sumbu X)
-            # Jika tangan kanan (setelah flip), jempol terbuka jika X ujung < X pangkal
-            if lm[4].x < lm[3].x: opened_fingers.append(1)
-            
+                if lm[t].y < lm[p].y:
+                    opened_fingers.append(1)
+
+            # 2. Logika Jempol (Harus beda antara Kiri dan Kanan)
+            # Gunakan perbandingan sumbu X antara Ujung (4) dan Pangkal (3/2)
+            if label == 'Right': # Tangan Kanan
+                if lm[4].x < lm[3].x: opened_fingers.append(1)
+            else: # Tangan Kiri
+                if lm[4].x > lm[3].x: opened_fingers.append(1)
+
             total_jari = sum(opened_fingers)
 
             # Jalankan Fuzzy

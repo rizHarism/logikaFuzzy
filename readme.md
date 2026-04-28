@@ -25,9 +25,11 @@ networkx
 
 ### Cara Instalasi:
 
-1. Buat virtual environment: `python -m venv venv`
-2. Aktifkan venv: `.\\venv\\Scripts\\activate`
+1. Buat virtual environment: `python -m venv .venv`
+2. Aktifkan venv: `.\\.venv\\Scripts\\activate`
 3. Instal library: `pip install -r requirements.txt`
+4. Jalankan aplikasi: `py` `brightness_control.py`
+5. Test aplikasi: `hadapkan telapak tangan ke kamera, brightness device akan otomatis berubah sesuai jumlah jari yang terbuka`
 
 ## 3. Alur Perhitungan Fuzzy (Flow Logic)
 
