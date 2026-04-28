@@ -20,6 +20,7 @@ scikit-fuzzy==0.5.0
 scipy==1.11.4
 screen-brightness-control==0.23.0
 packaging
+networkx
 ```
 
 ### Cara Instalasi:
