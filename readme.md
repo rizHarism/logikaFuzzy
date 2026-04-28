@@ -4,10 +4,9 @@ Proyek ini adalah sistem kontrol kecerahan layar laptop otomatis menggunakan det
 
 ## 1. Fitur Utama
 
-- **Fuzzy Logic Controller**: Menggunakan kurva keanggotaan Segitiga untuk transisi yang akurat.
+- **Fuzzy Logic Controller**: Menggunakan kurva keanggotaan Segitiga untuk transisi akurat.
 - **Hand Tracking**: Berbasis MediaPipe untuk deteksi landmark tangan yang cepat.
 - **Smoothing Transition**: Perubahan kecerahan dilakukan bertahap per 5% untuk kenyamanan mata.
-- **Auto-Calibration**: Mendukung deteksi tangan kanan dan kiri secara akurat.
 
 ## 2. Persyaratan Sistem (Requirements)
 
@@ -61,7 +60,6 @@ Sistem menggunakan metode **Centroid (Titik Berat)** untuk menghasilkan nilai te
 2. **Hand Detection**: MediaPipe mencari 21 titik koordinat tangan.
 3. **Finger Counting**:
    - Jari telunjuk-kelingking dicek berdasarkan posisi koordinat Y ujung jari terhadap pangkalnya.
-   - Jempol dicek berdasarkan posisi koordinat X (dibedakan antara tangan kiri dan kanan).
 4. **Execution**: Target brightness dari Fuzzy dibandingkan dengan brightness saat ini. Jika selisih > 5%, maka brightness layar diubah secara bertahap (+5% atau -5%).
 
 ---
